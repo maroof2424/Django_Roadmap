@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %} | Home{% endblock  %}
+
+{% block main %}
+<div class="contact-section">
+    <h2>Contact Me</h2>
+    <form class="contact-form">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="5" placeholder="Your Message"></textarea>
+        <button type="submit">Send</button>
+    </form>
+</div>
+{% endblock %}
