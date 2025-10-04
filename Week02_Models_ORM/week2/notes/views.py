@@ -14,3 +14,8 @@ def create_notes(request):
         Note.objects.create(title=title,content=content)
         return redirect("notes_list")
     return render(request,"notes/create_notes.html")
+
+def delete_note(request,note_id):
+    note = Note.objects.get(id = note_id)
+    note.delete()
+    return redirect("notes_list")
