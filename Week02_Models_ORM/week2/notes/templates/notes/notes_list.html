@@ -9,6 +9,7 @@
       <li>
         <b>{{ note.title }}</b> – {{ note.content }} <br>
         <a href="{% url "delete_note" note.id %} "> Delete</a>
+        <a href="{% url "update_note" note.id %} "> Update</a>
         <small>{{ note.created_at }}</small>
       </li>
     {% empty %}
