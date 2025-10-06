@@ -1,19 +1,24 @@
 {% extends "base.html" %}
-
 {% block title %}Notes List{% endblock %}
 
 {% block content %}
-  <h2>All Notes</h2>
-  <ul>
+  <h2 class="text-center mb-4">All Notes</h2>
+
+  <div class="row">
     {% for note in notes %}
-      <li>
-        <b>{{ note.title }}</b> – {{ note.content }} <br>
-        <a href="{% url "delete_note" note.id %} "> Delete</a>
-        <a href="{% url "update_note" note.id %} "> Update</a>
-        <small>{{ note.created_at }}</small>
-      </li>
+      <div class="col-md-6 mb-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ note.title }}</h5>
+            <p class="card-text">{{ note.content }}</p>
+            <p class="text-muted small">{{ note.created_at }}</p>
+            <a href="{% url 'update_note' note.id %}" class="btn btn-sm btn-outline-success">Edit</a>
+            <a href="{% url 'delete_note' note.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+          </div>
+        </div>
+      </div>
     {% empty %}
-      <li>No notes yet.</li>
+      <p class="text-center">No notes yet 😅</p>
     {% endfor %}
-  </ul>
+  </div>
 {% endblock %}
