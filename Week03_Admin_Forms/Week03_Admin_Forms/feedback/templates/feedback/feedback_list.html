@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}All Feedback{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">All Feedback</h2>
+
+<div class="row">
+    {% for fb in feedbacks %}
+    <div class="col-md-6 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ fb.name }} <small class="text-muted">({{ fb.rating }}/5)</small></h5>
+                <p class="card-text">{{ fb.message }}</p>
+                <p class="text-muted small">Submitted on: {{ fb.created_at|date:"M d, Y H:i" }}</p>
+                {% comment %} <a href="{% url 'update_feedback' fb.id %}" class="btn btn-sm btn-outline-success">Edit</a>
+                <a href="{% url 'delete_feedback' fb.id %}" class="btn btn-sm btn-outline-danger">Delete</a> {% endcomment %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center">No feedback submitted yet 😅</p>
+    {% endfor %}
+</div>
+{% endblock %}
