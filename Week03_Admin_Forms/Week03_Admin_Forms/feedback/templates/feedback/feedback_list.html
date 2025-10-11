@@ -1,24 +1,27 @@
 {% extends "base.html" %}
-{% block title %}All Feedback{% endblock %}
+{% block title %}Feedback List{% endblock %}
 
 {% block content %}
-<h2 class="text-center mb-4">All Feedback</h2>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">💬 User Feedback</h2>
 
-<div class="row">
-    {% for fb in feedbacks %}
-    <div class="col-md-6 mb-3">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">{{ fb.name }} <small class="text-muted">({{ fb.rating }}/5)</small></h5>
-                <p class="card-text">{{ fb.message }}</p>
-                <p class="text-muted small">Submitted on: {{ fb.created_at|date:"M d, Y H:i" }}</p>
-                {% comment %} <a href="{% url 'update_feedback' fb.id %}" class="btn btn-sm btn-outline-success">Edit</a>
-                <a href="{% url 'delete_feedback' fb.id %}" class="btn btn-sm btn-outline-danger">Delete</a> {% endcomment %}
-            </div>
+    {% if feedbacks %}
+        <div class="list-group">
+            {% for fb in feedbacks %}
+                <div class="list-group-item mb-3 shadow-sm rounded">
+                    <h5 class="mb-1">{{ fb.name }}</h5>
+                    <small class="text-muted">{{ fb.email }}</small>
+                    <p class="mt-2">{{ fb.message }}</p>
+                    <span class="badge bg-info">⭐ Rating: {{ fb.rating }}</span>
+                </div>
+            {% endfor %}
         </div>
+    {% else %}
+        <div class="alert alert-warning text-center">No feedback yet 😔</div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'feedback_form' %}" class="btn btn-primary">Add Feedback</a>
     </div>
-    {% empty %}
-    <p class="text-center">No feedback submitted yet 😅</p>
-    {% endfor %}
 </div>
 {% endblock %}

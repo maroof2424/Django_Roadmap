@@ -5,7 +5,7 @@ from .forms import FeedbackForm
 # Create your views here.
 
 def feedback_list(request):
-    feedbacks = Feedback.objects.all().order_by("-created_at")
+    feedbacks = Feedback.objects.all().order_by("-id")
     return render(request,"feedback/feedback_list.html",{"feedbacks":feedbacks})
 
 def feedback_form(request):
