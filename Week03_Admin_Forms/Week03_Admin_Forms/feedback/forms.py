@@ -23,3 +23,7 @@ class FeedbackForm(forms.ModelForm):
         if rating < 1 or rating > 5:
             raise forms.ValidationError("rating Must be between 1-5") 
         return rating
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
