@@ -4,7 +4,7 @@ from .models import Task
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-# Create your views here.
+
 @login_required(login_url='login')
 def task_list(request):
     tasks = Task.objects.all().order_by("-created_at")
