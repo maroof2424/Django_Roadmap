@@ -1,5 +1,3 @@
-# tasks/utils.py
-
 from faker import Faker
 from django.contrib.auth.models import User
 from .models import Task
