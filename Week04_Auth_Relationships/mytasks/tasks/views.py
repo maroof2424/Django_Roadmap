@@ -65,7 +65,7 @@ def signup_view(request):
         user.save()
         messages.success(request,"account created successfully...")
         return redirect("login")
-    return render(request,"tasks/signup.html")
+    return render(request,"tasks/auth.html")
 
 def login_view(request):
     if request.method == "POST":
@@ -82,7 +82,7 @@ def login_view(request):
             messages.error(request, "❌ Invalid credentials.")
             return redirect("login")
 
-    return render(request, "tasks/login.html")
+    return render(request, "tasks/auth.html")
 
 def logout_view(request):
     logout(request)
