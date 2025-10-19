@@ -19,7 +19,12 @@
             <label class="form-label">Username</label>
             <input type="text" name="username" class="form-control" required>
         </div>
-
+        {% if request.resolver_match.url_name == 'signup' %}
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+        {% endif %}
         <div class="mb-3">
             <label class="form-label">Password</label>
             <input type="password" name="password" class="form-control" required>
@@ -32,7 +37,7 @@
             </div>
         {% endif %}
 
-        <button type="submit" class="btn btn-primary w-100">
+        <button type="submit" class="btn btn-success w-100">
             {% if request.resolver_match.url_name == 'signup' %}Sign Up{% else %}Login{% endif %}
         </button>
     </form>
