@@ -1,45 +1,47 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import login,authenticate,logout
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .models import Post
-# Create your views here.
 
+@login_required(login_url="login")
 def create_post(request):
     if request.method == "POST":
-        data = request.POST
-        title = data.get("title")
-        content = data.get("content")
-
-        Post.objects.create(user = request.user ,title=title,content=content)
-        messages.success(request,"Post Created successfully...")
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        Post.objects.create(user=request.user, title=title, content=content)
+        messages.success(request, "✅ Post created successfully!")
         return redirect("list_posts")
-    return render(request,"blog/post_form.html")
+    return render(request, "blog/post_form.html")
 
+
+@login_required(login_url="login")
 def list_posts(request):
     posts = Post.objects.filter(user=request.user).order_by("-created_at")
-    return redirect(request,"blog/list_posts.html",{"posts":posts})
+    return render(request, "blog/list_posts.html", {"posts": posts})
 
-def update_post(request,pk):
-    post = Post.objects.get(pk=pk)
+
+@login_required(login_url="login")
+def update_post(request, pk):
+    post = get_object_or_404(Post, pk=pk, user=request.user)
     if request.method == "POST":
-        data = request.POST
-        post.title = data.get("title")
-        post.content = data.get("content")
+        post.title = request.POST.get("title")
+        post.content = request.POST.get("content")
         post.save()
-        messages.success(request,"Post Updated successfully...")
+        messages.success(request, "✏️ Post updated successfully!")
         return redirect("list_posts")
-    return render(request,"blog/post_form.html",{"post":post})
+    return render(request, "blog/post_form.html", {"post": post})
 
-def delete_post(request,pk):
+
+@login_required(login_url="login")
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk, user=request.user)
     if request.method == "POST":
-        post = Post.objects.get(pk=pk)
         post.delete()
-        messages.info(request, "Post deleted successfully!")
-        return redirect("post_list")
+        messages.info(request, "🗑️ Post deleted successfully!")
+        return redirect("list_posts")
     return render(request, "blog/post_confirm_delete.html", {"post": post})
-
 
 
 def signup_view(request):
@@ -57,8 +59,7 @@ def signup_view(request):
             messages.error(request, "⚠️ Username already exists.")
             return redirect("signup")
 
-        user = User.objects.create_user(username=username, email=email,password=password)
-        Post.objects.create(user=user)
+        user = User.objects.create_user(username=username, email=email, password=password)
         messages.success(request, "✅ Account created successfully! Please log in.")
         return redirect("login")
 
@@ -75,7 +76,7 @@ def login_view(request):
         if user:
             login(request, user)
             messages.success(request, "🎉 Logged in successfully!")
-            return redirect("task_list")
+            return redirect("list_posts")
         else:
             messages.error(request, "❌ Invalid credentials.")
             return redirect("login")
