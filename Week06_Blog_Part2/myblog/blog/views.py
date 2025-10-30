@@ -93,3 +93,12 @@ def logout_view(request):
     logout(request)
     messages.info(request, "👋 Logged out successfully.")
     return redirect("login")
+
+def post_detail(request, pk):
+    post = Post.objects.get(pk=pk)
+    comments = post.comments.all().order_by('-created_at')
+
+    return render(request, "blog/post_detail.html", {
+        "post": post,
+        "comments": comments
+    })

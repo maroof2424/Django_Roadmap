@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+
+    <hr>
+
+    <h4>Comments</h4>
+
+    {% for c in comments %}
+        <div class="card p-3 mb-2">
+            <strong>{{ c.user.username }}</strong>  
+            <p>{{ c.content }}</p>
+            <small class="text-muted">{{ c.created_at }}</small>
+        </div>
+    {% empty %}
+        <p>No comments yet. Be the first to drop one 😎</p>
+    {% endfor %}
+</div>
+{% endblock %}
