@@ -5,8 +5,9 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import Post, Comment
+from django.core.paginator import Paginator
+from django.db.models import Q
 
-# ✅ Create Post
 @login_required(login_url="login")
 def create_post(request):
     if request.method == "POST":
@@ -24,7 +25,6 @@ def create_post(request):
     return render(request, "blog/post_form.html")
 
 
-# ✅ List Posts (with search + filters)
 @login_required(login_url="login")
 def list_posts(request):
     query = request.GET.get("q", "")
@@ -45,8 +45,13 @@ def list_posts(request):
     else:
         posts = posts.order_by("-created_at")
 
+    paginator = Paginator(posts, 5)  
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     return render(request, "blog/list_posts.html", {
-        "posts": posts,
+        "page_obj": page_obj,
+        "posts": page_obj.object_list,
         "query": query,
         "filter_option": filter_option
     })
