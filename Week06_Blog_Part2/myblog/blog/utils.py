@@ -8,9 +8,8 @@ fake = Faker()
 def create_fake_data():
     print("✅ Creating random users...")
 
-    # ✅ Step 1: Create multiple random users
     users = []
-    for _ in range(5):   # how many users you want
+    for _ in range(5):  
         username = fake.user_name()
 
         user, created = User.objects.get_or_create(username=username)
@@ -22,12 +21,11 @@ def create_fake_data():
 
     print(f"✅ {len(users)} users ready!")
 
-    # ✅ Step 2: Create posts with random user
     print("✅ Creating posts with random users...")
 
     posts = []
-    for _ in range(10):   # number of posts
-        author = random.choice(users)   # pick random user
+    for _ in range(10):  
+        author = random.choice(users)
 
         post = Post.objects.create(
             user=author,
@@ -38,11 +36,10 @@ def create_fake_data():
 
     print("✅ 10 posts created!")
 
-    # ✅ Step 3: Random comments from random users
     print("✅ Creating comments...")
 
     for post in posts:
-        for _ in range(random.randint(1, 5)):  # 1–5 comments
+        for _ in range(random.randint(1, 5)):  
             commenter = random.choice(users)
 
             Comment.objects.create(
