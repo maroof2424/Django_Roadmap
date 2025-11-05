@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .forms import TodoForm
 from .models import Todo
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def list_tasks(request):
     tasks = Todo.objects.all().order_by("-created_at")
     return render(request, "todo/list_tasks.html", {"tasks": tasks})
 
-
+@login_required
 def create_task(request):
     if request.method == "POST":
         form = TodoForm(request.POST)
@@ -19,9 +20,9 @@ def create_task(request):
     else:
         form = TodoForm()
 
-    return render(request, "todo/form.html", {"form": form})
+    return render(request, "todo/forms.html", {"form": form})
 
-
+@login_required
 def update_task(request, pk):
     task = get_object_or_404(Todo, pk=pk)
 
@@ -34,9 +35,9 @@ def update_task(request, pk):
     else:
         form = TodoForm(instance=task)
 
-    return render(request, "todo/form.html", {"form": form, "task": task})
+    return render(request, "todo/forms.html", {"form": form, "task": task})
 
-
+@login_required
 def delete_task(request, pk):
     task = get_object_or_404(Todo, pk=pk)
 
