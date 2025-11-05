@@ -14,7 +14,10 @@ def create_task(request):
     if request.method == "POST":
         form = TodoForm(request.POST)
         if form.is_valid():
-            form.save()
+            task = form.save(commit=False)  
+            task.user = request.user  
+            task.save()
+
             messages.success(request, "Task created successfully ✅")
             return redirect("list_tasks")
     else:
