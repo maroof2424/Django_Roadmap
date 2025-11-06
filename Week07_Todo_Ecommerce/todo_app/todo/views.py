@@ -3,10 +3,21 @@ from django.contrib import messages
 from .forms import TodoForm
 from .models import Todo
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
 @login_required
 def list_tasks(request):
-    tasks = Todo.objects.all().order_by("-created_at")
+    tasks = Todo.objects.all()
+    query = request.GET.get('q')
+    status = request.GET.get('status')
+    if query:
+        tasks = Todo.objects.filter(
+            Q(title__icontains=query) | Q(description__icontains=query)
+        )
+    if status == "complete":
+        tasks = tasks.filter(complete=True)
+    elif status == "incomplete":
+        tasks = tasks.filter(complete=False)
+    tasks = tasks.order_by("-created_at")
     return render(request, "todo/list_tasks.html", {"tasks": tasks})
 
 @login_required
