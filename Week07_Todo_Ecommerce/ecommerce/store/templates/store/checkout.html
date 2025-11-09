@@ -1,0 +1,19 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h2>Checkout</h2>
+
+<h4>Order Summary</h4>
+<ul>
+    {% for item in items %}
+    <li>{{ item.product.title }} - {{ item.quantity }} x Rs. {{ item.product.price }} = Rs. {{ item.amount }}</li>
+    {% endfor %}
+</ul>
+<h4>Total: Rs. {{ total }}</h4>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Place Order</button>
+</form>
+{% endblock %}
