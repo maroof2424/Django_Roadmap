@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4">
+        <h2 class="mb-3">
+            {% if object %} Edit Post {% else %} Create Post {% endif %}
+        </h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_title" class="form-label">Title</label>
+                {{ form.title }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_content" class="form-label">Content</label>
+                {{ form.content }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                {% if object %} Update {% else %} Create {% endif %}
+            </button>
+            <a href="{% url 'list_post' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

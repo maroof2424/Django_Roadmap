@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4 text-center">
+        <h2 class="mb-4">Delete Post</h2>
+        <p>Are you sure you want to delete the post: <strong>{{ object.title }}</strong>?</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'list_posts' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

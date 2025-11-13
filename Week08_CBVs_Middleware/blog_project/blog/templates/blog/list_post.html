@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block main %}
+{% block content %}
   <h1 class="mb-4">Latest Posts</h1>
   <p>Total posts: {{ posts|length }}</p>
 
@@ -13,6 +13,8 @@
         <th>Created At</th>
         <th>Updated At</th>
         <th>Post Details</th>
+        <th>Update Post</th>
+        <th>Delete Post</th>
       </tr>
     </thead>
 
@@ -33,6 +35,12 @@
 
           <td>
             <a href="{% url 'post_details' post.pk %}" class="btn btn-primary">Details</a>
+          </td>
+          <td>
+            <a href="{% url 'update_post' post.pk %}" class="btn btn-success">Update</a>
+          </td>
+          <td>
+            <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger">Delete</a>
           </td>
         </tr>
       {% endfor %}
