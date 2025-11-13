@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h1 class="card-title">{{ post.title }}</h1>
+            <p class="card-text">{{ post.content }}</p>
+        </div>
+        <div class="card-footer text-muted d-flex justify-content-between">
+            <small>Created: {{ post.created_at|date:"M d, Y g:i A" }}</small>
+            <small>Updated: {{ post.updated_at|date:"M d, Y g:i A" }}</small>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
