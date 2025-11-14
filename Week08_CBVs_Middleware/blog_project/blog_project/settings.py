@@ -110,6 +110,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+LOGIN_REDIRECT_URL = "list_post"
+LOGOUT_REDIRECT_URL = "list_post"
 
 
 # Static files (CSS, JavaScript, Images)
